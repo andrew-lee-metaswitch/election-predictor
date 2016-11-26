@@ -42,7 +42,17 @@ def get_area_overlap(const_id):
                 intersection_dict[elec_dist.record[0]] = \
                     round(isection.area / const_poly.area, 8)
 
+    # Occasinally the numbers don't quite add up, due to rounding
+    # errors and/or intersecting lines. Modify the biggest intersection
+    # as this will create the smallest deviation from the "true" value
+    if sum(intersection_dict.values()) != float(1):
+        print "Correcting %s" % (const_name)
+        diff = float(1) - sum(intersection_dict.values())
+        biggest_electoral_dist = max(intersection_dict,
+                                     key=intersection_dict.get)
+        intersection_dict[biggest_electoral_dist] += diff
+
     assert sum(intersection_dict.values()) == 1.0, \
-        "1.0 != %s" % (sum(intersection_dict.values()))
+        "%s" % (intersection_dict)
 
     return intersection_dict

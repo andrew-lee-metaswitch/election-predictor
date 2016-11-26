@@ -3,7 +3,7 @@
 
 
 import csv
-import geoutils
+#import geoutils
 import operator
 
 ELECTORAL_DATA_DIR = 'data/elections/'
@@ -79,7 +79,8 @@ def get_constituency_dict():
             cons_dict[row['Constituency ID']] = {
                 'Name': row['Constituency Name'],
                 'Electorate': decomma(row['Electorate']),
-                'NumVotes': decomma(row[' Total number of valid votes counted '])}
+                'NumVotes': decomma(row[' Total number of valid votes counted ']),
+                'VotesByParty': {}}
 
             def add_party(party):
                 cons_dict[row['Constituency ID']]['VotesByParty'][party] = decomma(row[party])

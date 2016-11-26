@@ -1,6 +1,10 @@
-from __future__ import division
 import shapefile
 from shapely.geometry import box, shape
+
+# Use 8 sf decimals throughout
+from decimal import Decimal, getcontext
+
+getcontext().prec = 8
 
 SHAPEFILE_FOLDER = 'data/shapes/'
 REFERENDUM_DISTRICT_SHAPES = 'unitary_electoral_division_region'
@@ -40,19 +44,19 @@ def get_area_overlap(const_id):
             elif overlaps(elec_poly, const_poly):
                 isection = elec_poly.intersection(const_poly)
                 intersection_dict[elec_dist.record[0]] = \
-                    round(isection.area / const_poly.area, 8)
+                    Decimal(isection.area) / Decimal(const_poly.area)
 
     # Occasinally the numbers don't quite add up, due to rounding
     # errors and/or intersecting lines. Modify the biggest intersection
     # as this will create the smallest deviation from the "true" value
-    if sum(intersection_dict.values()) != float(1):
-        print "Correcting %s" % (const_name)
-        diff = float(1) - sum(intersection_dict.values())
+    if sum(intersection_dict.values()) != Decimal(1):
+        print "Correcting %s" % (const_id)
+        diff = Decimal(1) - sum(intersection_dict.values())
         biggest_electoral_dist = max(intersection_dict,
                                      key=intersection_dict.get)
         intersection_dict[biggest_electoral_dist] += diff
 
-    assert sum(intersection_dict.values()) == 1.0, \
+    assert sum(intersection_dict.values()) == Decimal(1), \
         "%s" % (intersection_dict)
 
     return intersection_dict

@@ -80,6 +80,7 @@ def get_constituency_dict():
                 'Name': row['Constituency Name'],
                 'Electorate': decomma(row['Electorate']),
                 'NumVotes': decomma(row[' Total number of valid votes counted '])}
+
             def add_party(party):
                 cons_dict[row['Constituency ID']]['VotesByParty'][party] = decomma(row[party])
             for party in ['Lab','C','LD','Green','UKIP','SNP','DUP','SDLP','SF','UUP','PC']:

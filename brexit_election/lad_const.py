@@ -3,7 +3,7 @@
 
 
 import csv
-#import geoutils
+import geoutils
 import operator
 
 ELECTORAL_DATA_DIR = 'data/elections/'
@@ -37,10 +37,11 @@ def get_lad_code_dict():
     with open(ELECTORAL_DATA_DIR + BREXIT_DATA) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            lad_dict[row['Area_Code']] = {'Area': row['Area'],
-                                          'Electorate': int(row['Electorate']),
-                                          'Remain': int(row['Remain']),
-                                          'Leave' : int(row['Leave']), }
+            if row['Area_Code'] != 'GI':
+                lad_dict[row['Area_Code']] = {'Area': row['Area'],
+                                              'Electorate': int(row['Electorate']),
+                                              'Remain': int(row['Remain']),
+                                              'Leave' : int(row['Leave']), }
 
     for lad in lad_dict.keys():
         if lad_dict[lad]['Remain'] > lad_dict[lad]['Leave']:

@@ -92,11 +92,47 @@ def get_constituency_dict():
         major_party_votes = sum(cons_dict[cons]['VotesByParty'].values())
         minor_party_votes = cons_dict[cons]['NumVotes'] - major_party_votes
         cons_dict[cons]['VotesByParty']['Other'] = minor_party_votes
-        cons_dict[cons]['LAD'] = geoutils.get_area_overlap(cons)
+
     return cons_dict
 
+LAD_d = get_lad_code_dict()
+CONS_d = get_constituency_dict()
+
+def is_brexit_party(party):
+    brexit_party = True
+    if party in ['Lab','LD','Green','SNP','SDLP','SF','PC']:
+        brexit_party = False
+    return brexit_party
+
+def voted_for_brexit(const):
+    cons_data = CONS_d[const]
+    lads = cons_data['LAD']
+    estimate_of_electorate_size = 0
+    estimate_of_remain_voters = 0
+    estimate_of_leave_voters = 0
+    for lad in lads.keys():
+        lad_data = LAD_d[lad]
+        # This is an estimate of the number of people in the constinuency who can vote who can live
+        # in this LAD
+        ele_size = int(lads[lad] * lad_data['Electorate'])
+        # Based on the number of remain voters in this LAD, we add that many remain voters to the
+        # estimate_of_remain_voters in that constitenucy
+        estimate_of_remain_voters += (ele_size * lad_data['Remain']) / lad_data['Electorate'] * 1.0
+        estimate_of_leave_voters += (ele_size * lad_data['Leave']) / lad_data['Electorate'] * 1.0
+        estimate_of_electorate_size += ele_size
+    vote_outcome = 'Leave'
+    if estimate_of_remain_voters > estimate_of_leave_voters:
+        vote_outcome = 'Remain'
+    return vote_outcome
+
+
+
 def main():
-    pass
+    for const in CONS_d.keys():
+        cons_data = CONS_d[const]
+        cons_data['LAD'] = geoutils.get_area_overlap(const)
+        print "{} voted for {} at the 2015 election, " \
+              "they voted {} in Brexit vote".format(cons_data['Name'], cons_data['WinningParty'], voted_for_brexit(const))
 
 if __name__ == '__main__':
     main()

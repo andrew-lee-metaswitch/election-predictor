@@ -58,6 +58,25 @@ def get_lad_code_dict():
 
 
 def get_constituency_dict():
+    """
+        The constituency dictionary is dict with with keys being Westminster
+        constituency codes, and each value being a dictionary with the
+        following keys:
+        - Name:         Constituency name
+        - Electorate:   Electorate size
+        - NumVotes:     Number of votes cast in the 2015 general election
+        - VotesByParty: A dictionary with key's party short names and number
+                        of votes that party received
+
+        For example:
+        cons_dict[CODEXXX] = {'Electorate': 91236,
+                              'NumVotes': 64218,
+                              'VotesByParty': {'G': 17227,
+                                               'Other': 296,
+                                               ...
+                                              }
+                              'Name': 'Bristol West'}
+    """
     cons_dict = {}
 
     with open(ELECTORAL_DATA_DIR + GENELEC_DATA) as csvfile:
@@ -66,7 +85,7 @@ def get_constituency_dict():
             cons_dict[row['Constituency ID']] = {
                 'Name': row['Constituency Name'],
                 'Electorate': decomma(row['Electorate']),
-                'NoVotes': decomma(row[' Total number of valid votes counted '])}
+                'NumVotes': decomma(row[' Total number of valid votes counted '])}
             cons_dict[row['Constituency ID']]['VotesByParty'] = {
                 'Lab' : decomma(row['Lab']),
                 'Con' : decomma(row['C']),
@@ -92,16 +111,6 @@ for cons in cons_dict.keys():
     if 'Bristol' in cons_dict[cons]['Name']:
         print cons_dict[cons]
     cons_dict[cons]['LAD'] = geoutils.get_area_overlap(cons)
-
-# At this point const dict is a dictinoary with keys being Const. Codes, and each value being a dictionary with the following keys:
-#   Name: Const  name
-#   Electorate: Electorate size
-#   NoVotes: No of votes cast
-#   VotesByParty: A dictioanry with key's party short names and number of votes of
-#   e.g. cons_dict[CODEXXX]=
-#  {'Electorate': 91236, 'NoVotes': 64218, 'VotesByParty':
-#  {'G': 17227, 'Other': 296, 'DUP': 0, 'Con': 9752, 'LD': 12103, 'SDLP': 0,
-#  'UKIP': 1940, 'UUP': 0, 'Lab': 22900, 'PC': 0, 'SNP': 0, 'SF': 0}, 'Name': 'Bristol West'}
 
 
 # In[ ]:

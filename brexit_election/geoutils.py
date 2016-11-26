@@ -38,25 +38,13 @@ def get_area_overlap(const_id):
     for elec_dist in DISTS.shapeRecords():
         if overlaps(box(*elec_dist.shape.bbox), const_bbox):
             elec_poly = shape(elec_dist.shape.__geo_interface__)
-            if elec_poly.contains(const_poly):
+            if const_poly.contains(elec_poly):
                 intersection_dict[elec_dist.record[0]] = 1.0
-                break
             elif overlaps(elec_poly, const_poly):
                 isection = elec_poly.intersection(const_poly)
                 intersection_dict[elec_dist.record[0]] = \
-                    Decimal(isection.area) / Decimal(const_poly.area)
-
-    # Occasinally the numbers don't quite add up, due to rounding
-    # errors and/or intersecting lines. Modify the biggest intersection
-    # as this will create the smallest deviation from the "true" value
-    if sum(intersection_dict.values()) != Decimal(1):
-        print "Correcting %s" % (const_id)
-        diff = Decimal(1) - sum(intersection_dict.values())
-        biggest_electoral_dist = max(intersection_dict,
-                                     key=intersection_dict.get)
-        intersection_dict[biggest_electoral_dist] += diff
-
-    assert sum(intersection_dict.values()) == Decimal(1), \
-        "%s" % (intersection_dict)
+                    Decimal(isection.area) / Decimal(elec_poly.area)
+                if elec_poly.contains(const_poly):
+                    break
 
     return intersection_dict

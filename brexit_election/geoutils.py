@@ -40,7 +40,7 @@ def get_area_overlap(const_id):
             elif overlaps(elec_poly, const_poly):
                 isection = elec_poly.intersection(const_poly)
                 intersection_dict[elec_dist.record[0]] = \
-                    isection.area / const_poly.area
+                    round(isection.area / const_poly.area, 8)
 
     assert sum(intersection_dict.values()) == 1.0, \
         "1.0 != %s" % (sum(intersection_dict.values()))

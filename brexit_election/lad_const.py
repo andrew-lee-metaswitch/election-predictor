@@ -1,18 +1,13 @@
 # coding: utf-8
-"""
-    lad.py
+# Local Area District Brexit data query
 
-    Local Area District Brexit data query
-"""
 
-from collections import namedtuple
-import logging
 import csv
 import geoutils
 import operator
 
 ELECTORAL_DATA_DIR = 'data/elections/'
-BREXIT_DATA = "brexit_election_data.csv":
+BREXIT_DATA = "brexit_election_data.csv"
 GENELEC_DATA = "2015_election_data.csv"
 
 
@@ -53,7 +48,6 @@ def get_lad_code_dict():
         else:
             lad_dict[lad]['Result'] = 'Leave'
 
-
     return lad_dict
 
 
@@ -86,41 +80,23 @@ def get_constituency_dict():
                 'Name': row['Constituency Name'],
                 'Electorate': decomma(row['Electorate']),
                 'NumVotes': decomma(row[' Total number of valid votes counted '])}
-            cons_dict[row['Constituency ID']]['VotesByParty'] = {
-                'Lab' : decomma(row['Lab']),
-                'Con' : decomma(row['C']),
-                'LD' : decomma(row['LD']),
-                'G' : decomma(row['Green']),
-                'UKIP' : decomma(row['UKIP']),
-                'SNP' : decomma(row['SNP']),
-                'DUP' : decomma(row['DUP']),
-                'SDLP' : decomma(row['SDLP']),
-                'SF' : decomma(row['SF']),
-                'UUP' : decomma(row['UUP']),
-                'PC' : decomma(row['PC']),}
 
+            def add_party(party):
+                cons_dict[row['Constituency ID']]['VotesByParty'][party] = decomma(row[party])
+            for party in ['Lab','C','LD','Green','UKIP','SNP','DUP','SDLP','SF','UUP','PC']:
+                add_party(party)
 
+    for cons in cons_dict.keys():
+        cons_dict[cons]['WinningParty'] = max(cons_dict[cons]['VotesByParty'].iteritems(), key=operator.itemgetter(1))[0]
 
-        #print lad_dict[row['Area_Code']]
-for cons in cons_dict.keys():
-    cons_dict[cons]['WinningParty'] = max(cons_dict[cons]['VotesByParty'].iteritems(), key=operator.itemgetter(1))[0]
+        major_party_votes = sum(cons_dict[cons]['VotesByParty'].values())
+        minor_party_votes = cons_dict[cons]['NumVotes'] - major_party_votes
+        cons_dict[cons]['VotesByParty']['Other'] = minor_party_votes
+        cons_dict[cons]['LAD'] = geoutils.get_area_overlap(cons)
+    return cons_dict
 
-    major_party_votes = sum(cons_dict[cons]['VotesByParty'].values())
-    minor_party_votes = cons_dict[cons]['NoVotes'] - major_party_votes
-    cons_dict[cons]['VotesByParty']['Other'] = minor_party_votes
-    if 'Bristol' in cons_dict[cons]['Name']:
-        print cons_dict[cons]
-    cons_dict[cons]['LAD'] = geoutils.get_area_overlap(cons)
-
-
-# In[ ]:
-
-for cons in cons_dict:
-
-
-
-# In[ ]:
-
+def main():
+    pass
 
 if __name__ == '__main__':
     main()

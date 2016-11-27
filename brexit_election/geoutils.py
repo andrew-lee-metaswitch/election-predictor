@@ -7,7 +7,7 @@ from decimal import Decimal, getcontext
 getcontext().prec = 8
 
 SHAPEFILE_FOLDER = 'data/shapes/'
-REFERENDUM_DISTRICT_SHAPES = 'unitary_electoral_division_region'
+REFERENDUM_DISTRICT_SHAPES = 'district_borough_unitary_region'
 WESTMINSTER_DISTRICT_SHAPES = 'westminster_const_region'
 
 # Load the shapefiles here to only load them once
@@ -39,10 +39,10 @@ def get_area_overlap(const_id):
         if overlaps(box(*elec_dist.shape.bbox), const_bbox):
             elec_poly = shape(elec_dist.shape.__geo_interface__)
             if const_poly.contains(elec_poly):
-                intersection_dict[elec_dist.record[0]] = 1.0
+                intersection_dict[elec_dist.record[8]] = 1.0
             elif overlaps(elec_poly, const_poly):
                 isection = elec_poly.intersection(const_poly)
-                intersection_dict[elec_dist.record[0]] = \
+                intersection_dict[elec_dist.record[8]] = \
                     Decimal(isection.area) / Decimal(elec_poly.area)
                 if elec_poly.contains(const_poly):
                     break

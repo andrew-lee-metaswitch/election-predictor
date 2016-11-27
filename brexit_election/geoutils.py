@@ -27,24 +27,28 @@ def get_area_overlap(const_id):
         Return a dictionary containing the percentage of the constituency
         that is in each intersecting electoral area
     """
-    assert const_id in CONST_IDS, \
-        "Unknown constituency: {0}".format(const_id)
+    # Northern Ireland directly used constituencies in the EU referendum
+    if const_id[0] == 'N':
+        intersection_dict = {const_id: Decimal(1)}
+    else:
+        assert const_id in CONST_IDS, \
+            "Unknown constituency: {0}".format(const_id)
 
-    intersection_dict = {}
-    const_shape = CONSTS.shapes()[CONST_IDS.index(const_id)]
-    const_bbox = box(*const_shape.bbox)
-    const_poly = shape(const_shape.__geo_interface__)
+        intersection_dict = {}
+        const_shape = CONSTS.shapes()[CONST_IDS.index(const_id)]
+        const_bbox = box(*const_shape.bbox)
+        const_poly = shape(const_shape.__geo_interface__)
 
-    for elec_dist in DISTS.shapeRecords():
-        if overlaps(box(*elec_dist.shape.bbox), const_bbox):
-            elec_poly = shape(elec_dist.shape.__geo_interface__)
-            if const_poly.contains(elec_poly):
-                intersection_dict[elec_dist.record[8]] = 1.0
-            elif overlaps(elec_poly, const_poly):
-                isection = elec_poly.intersection(const_poly)
-                intersection_dict[elec_dist.record[8]] = \
-                    Decimal(isection.area) / Decimal(elec_poly.area)
-                if elec_poly.contains(const_poly):
-                    break
+        for elec_dist in DISTS.shapeRecords():
+            if overlaps(box(*elec_dist.shape.bbox), const_bbox):
+                elec_poly = shape(elec_dist.shape.__geo_interface__)
+                if const_poly.contains(elec_poly):
+                    intersection_dict[elec_dist.record[8]] = 1.0
+                elif overlaps(elec_poly, const_poly):
+                    isection = elec_poly.intersection(const_poly)
+                    intersection_dict[elec_dist.record[8]] = \
+                        Decimal(isection.area) / Decimal(elec_poly.area)
+                    if elec_poly.contains(const_poly):
+                        break
 
     return intersection_dict

@@ -8,6 +8,7 @@ import operator
 
 ELECTORAL_DATA_DIR = 'data/elections/'
 BREXIT_DATA = "brexit_election_data.csv"
+BREXIT_DATA_NI = "brexit_northern_ireland_breakdown.csv"
 GENELEC_DATA = "2015_election_data.csv"
 
 
@@ -37,11 +38,19 @@ def get_lad_code_dict():
     with open(ELECTORAL_DATA_DIR + BREXIT_DATA) as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            if row['Area_Code'] != 'GI':
+            if row['Area_Code'] not in ['GI', 'N92000002']:
                 lad_dict[row['Area_Code']] = {'Area': row['Area'],
                                               'Electorate': int(row['Electorate']),
                                               'Remain': int(row['Remain']),
                                               'Leave' : int(row['Leave']), }
+
+    with open(ELECTORAL_DATA_DIR + BREXIT_DATA_NI) as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            lad_dict[row['Area_Code']] = {'Area': row['Area'],
+                                          'Electorate': int(row['Electorate']),
+                                          'Remain': int(row['Remain']),
+                                          'Leave' : int(row['Leave']), }
 
     for lad in lad_dict.keys():
         if lad_dict[lad]['Remain'] > lad_dict[lad]['Leave']:
@@ -128,13 +137,27 @@ def voted_for_brexit(const):
     return vote_outcome
 
 
-
 def main():
+    leave = 0
+    remain = 0
+
     for const in CONS_d.keys():
         cons_data = CONS_d[const]
         cons_data['LAD'] = geoutils.get_area_overlap(const)
+        outcome = voted_for_brexit(const)
+
         print "{} voted for {} at the 2015 election, " \
-              "they voted {} in Brexit vote".format(cons_data['Name'], cons_data['WinningParty'], voted_for_brexit(const))
+              "they voted {} in Brexit vote".format(cons_data['Name'], cons_data['WinningParty'], outcome)
+
+        if outcome == 'Leave':
+            leave += 1
+        elif outcome == 'Remain':
+            remain += 1
+        else:
+            assert False
+
+    print "Final tally: Leave - %s, Remain - %s" % (str(leave), str(remain))
+
 
 if __name__ == '__main__':
     main()

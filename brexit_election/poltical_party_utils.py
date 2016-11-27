@@ -1,0 +1,32 @@
+LABOUR = 'Lab'
+LIBDEM = 'LD'
+CON = 'C'
+UKIP = 'UKIP'
+GREEN = 'Green'
+SNP = 'SNP'
+PC = 'PC'
+DUP = 'DUP'
+SDLP = 'SDLP'
+SF = 'SF'
+UUP = 'UUP'
+
+
+ENGLAND = 'England'
+SCOTLAND = 'Scotland'
+WALES = 'Wales'
+NI = 'Northern Ireland'
+
+COUNTRIES = [ENGLAND, SCOTLAND, WALES, NI]
+UK_PARTIES = [LABOUR, LIBDEM, CON, UKIP, GREEN, SNP, PC, DUP, SDLP, SF, UUP]
+
+def get_poltical_parties(country):
+    MAIN_POLITICAL_PARTIES = [LABOUR, LIBDEM, CON, UKIP, GREEN]
+    if country == ENGLAND:
+        POLITICAL_PARTIES = MAIN_POLITICAL_PARTIES
+    if country == SCOTLAND:
+        POLITICAL_PARTIES = MAIN_POLITICAL_PARTIES + [SNP]
+    if country == WALES:
+        POLITICAL_PARTIES = MAIN_POLITICAL_PARTIES + [PC]
+    if country == NI:
+        POLITICAL_PARTIES =[DUP, SDLP, SF, UUP]
+    return POLITICAL_PARTIES

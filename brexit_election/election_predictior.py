@@ -86,7 +86,7 @@ def get_country_vote_share():
         for party in get_poltical_parties(country):
             COUNTRY_DICT[country][party] = get_vote_share(country, party)
 get_country_vote_share()
-pprint.pprint(COUNTRY_DICT)
+#pprint.pprint(COUNTRY_DICT)
 
 def get_biases(const):
     cons_data = CONS_d[const]
@@ -98,14 +98,12 @@ def get_biases(const):
         cons_data['Biases'][party] = bias
         #print "{} has a bias of {} towards {}".format(cons_data['Name'], party, bias)
 
-for const in CONS_d.keys():
-    get_biases(const)
-
 
 from opinionpolls import opinion_polls_current
 
 
 def vote_prediction(const):
+    get_biases(const)
     cons_data = CONS_d[const]
     country = cons_data['Country']
     cons_data['CurrentPredictVotesByParty'] = {}
@@ -114,24 +112,30 @@ def vote_prediction(const):
         cons_data['CurrentPredictVotesByParty'][party] = predicted_vote_percent_in_const * cons_data['2015NumVotes']
     cons_data['PredictedWinningParty'] = max(cons_data['CurrentPredictVotesByParty'].iteritems(), key=operator.itemgetter(1))[0]
     if cons_data['PredictedWinningParty'] != cons_data['2015WinningParty']:
-        print "Predict {} to go from {} to {}".format(cons_data['Name'],cons_data['2015WinningParty'],cons_data['PredictedWinningParty'])
+        pass
+        #print "Predict {} to go from {} to {}".format(cons_data['Name'],cons_data['2015WinningParty'],cons_data['PredictedWinningParty'])
 
-def get_const_data_by_name(name):
+def print_const_data_by_name(name):
     for const in CONS_d.keys():
         if name in CONS_d[const]['Name']:
-            print CONS_d[const]
-
+            pass
+            #pprint.pprint(CONS_d[const])
+    return None
+def get_constituency_data_by_name(name):
+    for const in CONS_d.keys():
+        if name == CONS_d[const]['Name']:
+            return CONS_d[const]
     return None
 
-get_const_data_by_name('Enfield')
 
 
 for const in CONS_d.keys():
     vote_prediction(const)
 for party in UK_PARTIES:
     predictied_seats = len([cons for cons in CONS_d.keys() if CONS_d[cons]['PredictedWinningParty'] == party])
-    print "{} are predicted {} seats".format(party, predictied_seats)
+    #print "{} are predicted {} seats".format(party, predictied_seats)
 
+#print_const_data_by_name('Bradford')
 
 
 def main():

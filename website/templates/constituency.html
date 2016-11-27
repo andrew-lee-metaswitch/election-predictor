@@ -1,0 +1,59 @@
+<html>
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src='search.js'></script>
+    <title>UK Election Predictor</title>
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#"><i class="fa fa-coffee" aria-hidden="true"></i>UK Election Predictor</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+             <form method="post" action="/constituency">
+            {{ form.autocomp.label }}: {{ form.autocomp }}
+            <button type="submit" class="btn btn-primary">Go!</button></form>
+
+    <div class="container">
+        <div class="row">
+        <div class="col-md-12">
+        <h1 class="page-header">{{ data['Name'] }}</h1>
+        <h3>Constitency Data</h3>
+            <table>
+                <tr>
+                    <th>2015 Winning Party  </th>
+                    <td>{{ data['2015WinningParty'] }}</td>
+                </tr>
+                <tr>
+                    <th>Predicted Winning Party  </th>
+                    <td>{{ data['WinningParty'] }}</td>
+                </tr>
+            </table>
+
+</table>
+
+        </div>
+        </div>
+    </div>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://use.fontawesome.com/544eba3c12.js"></script>
+</body>
+</html>

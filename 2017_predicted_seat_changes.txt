@@ -1,0 +1,75 @@
+Predict Hove to go from Lab to C
+Predict Ilford North to go from Lab to C
+Predict Hyndburn to go from Lab to C
+Predict Carshalton & Wallington to go from LD to C
+Predict Slough to go from Lab to C
+Predict Bolton North East to go from Lab to C
+Predict Blackpool South to go from Lab to C
+Predict Luton South to go from Lab to C
+Predict Dewsbury to go from Lab to C
+Predict Edinburgh South to go from Lab to SNP
+Predict Wirral South to go from Lab to C
+Predict Walsall South to go from Lab to C
+Predict Walsall North to go from Lab to C
+Predict Wolverhampton North East to go from Lab to C
+Predict Derbyshire North East to go from Lab to C
+Predict Ellesmere Port & Neston to go from Lab to C
+Predict Stalybridge & Hyde to go from Lab to C
+Predict York Central to go from Lab to C
+Predict Wakefield to go from Lab to C
+Predict Lancashire West to go from Lab to C
+Predict Westminster North to go from Lab to C
+Predict Chorley to go from Lab to C
+Predict Harrow West to go from Lab to C
+Predict Bishop Auckland to go from Lab to C
+Predict Birmingham Northfield to go from Lab to C
+Predict Birmingham Edgbaston to go from Lab to C
+Predict Birmingham Erdington to go from Lab to C
+Predict Mansfield to go from Lab to C
+Predict Southport to go from LD to C
+Predict Ealing Central & Acton to go from Lab to C
+Predict Dudley North to go from Lab to C
+Predict Bristol South to go from Lab to C
+Predict Bristol West to go from Lab to Green
+Predict Burnley to go from Lab to LD
+Predict Buckingham to go from UKIP to Green
+Predict Great Grimsby to go from Lab to C
+Predict Scunthorpe to go from Lab to C
+Predict Exeter to go from Lab to C
+Predict Eltham to go from Lab to C
+Predict Enfield North to go from Lab to C
+Predict Bermondsey & Old Southwark to go from Lab to LD
+Predict Middlesbrough South & Cleveland East to go from Lab to C
+Predict Wirral West to go from Lab to C
+Predict Southampton Test to go from Lab to C
+Predict Copeland to go from Lab to C
+Predict Chester, City Of to go from Lab to C
+Predict Clacton to go from UKIP to C
+Predict Halifax to go from Lab to C
+Predict Hampstead & Kilburn to go from Lab to C
+Predict Berwickshire, Roxburgh & Selkirk to go from SNP to C
+Predict Leeds North East to go from Lab to C
+Predict Brentford & Isleworth to go from Lab to C
+Predict Bristol East to go from Lab to C
+Predict Nottingham South to go from Lab to C
+Predict Ynys Mon to go from Lab to PC
+Predict Tooting to go from Lab to C
+Predict Bury South to go from Lab to C
+Predict Cambridge to go from Lab to LD
+Predict Hammersmith to go from Lab to C
+Predict Barrow & Furness to go from Lab to C
+Predict Batley & Spen to go from Lab to C
+Predict Newcastle-Under-Lyme to go from Lab to C
+Predict Lancaster & Fleetwood to go from Lab to C
+Predict Tynemouth to go from Lab to C
+Predict Darlington to go from Lab to C
+Predict Coventry North West to go from Lab to C
+Predict Coventry South to go from Lab to C
+Predict Gedling to go from Lab to C
+Predict Stoke-On-Trent South to go from Lab to C
+Predict Workington to go from Lab to C
+Predict Wolverhampton South West to go from Lab to C
+Predict Worsley & Eccles South to go from Lab to C
+Predict Penistone & Stocksbridge to go from Lab to C
+Predict Oldham East & Saddleworth to go from Lab to C
+Predict Stoke-On-Trent North to go from Lab to C

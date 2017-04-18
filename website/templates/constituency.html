@@ -6,6 +6,7 @@
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src='search.js'></script>
+
     <title>UK Election Predictor</title>
 </head>
 <body>
@@ -18,11 +19,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#"><i class="fa fa-coffee" aria-hidden="true"></i>UK Election Predictor</a>
+          <a class="navbar-brand" href="/"><i class="fa fa-coffee" aria-hidden="true"></i>UK Election Predictor</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="/">Home</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -41,13 +42,36 @@
                     <th>2015 Winning Party  </th>
                     <td>{{ data['2015WinningParty'] }}</td>
                 </tr>
+
                 <tr>
                     <th>Predicted Winning Party  </th>
                     <td>{{ data['WinningParty'] }}</td>
                 </tr>
             </table>
-
-</table>
+ <body>
+      <div id="wrapper">
+         <div class="chart">
+            <h3>2015 Election Results</h3>
+            <table id="data-table" border="1" cellpadding="10" cellspacing="0"
+            summary="2015 Election Data">
+               <caption>Votes</caption>
+               <thead>
+                  <tr>
+                      {% for party in data['2015VotesByParty'].keys() %}
+        <th scope="col">{{ party }}</th>
+        {% endfor %}
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                    {% for party in data['2015VotesByParty'].keys() %}
+        <th scope="col">{{ data['2015VotesByParty'][party] }}</th>
+        {% endfor %}
+                  </tr>
+                 </tbody>
+            </table>
+         </div>
+      </div>
 
         </div>
         </div>

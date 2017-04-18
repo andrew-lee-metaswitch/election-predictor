@@ -10,11 +10,13 @@ SDLP = 'SDLP'
 SF = 'SF'
 UUP = 'UUP'
 
+YEARS = [1983, 1987, 1992, 1997, 2001, 2005, 2010, 2015]
 
 ENGLAND = 'England'
 SCOTLAND = 'Scotland'
 WALES = 'Wales'
 NI = 'Northern Ireland'
+UK = 'United Kingdom'
 
 COUNTRIES = [ENGLAND, SCOTLAND, WALES, NI]
 UK_PARTIES = [LABOUR, LIBDEM, CON, UKIP, GREEN, SNP, PC, DUP, SDLP, SF, UUP]
@@ -29,4 +31,6 @@ def get_poltical_parties(country):
         POLITICAL_PARTIES = MAIN_POLITICAL_PARTIES + [PC]
     if country == NI:
         POLITICAL_PARTIES =[DUP, SDLP, SF, UUP]
+    if country == UK:
+        POLITICAL_PARTIES= UK_PARTIES
     return POLITICAL_PARTIES

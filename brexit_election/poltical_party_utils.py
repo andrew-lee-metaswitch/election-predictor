@@ -30,7 +30,7 @@ def get_poltical_parties(country):
     if country == WALES:
         POLITICAL_PARTIES = MAIN_POLITICAL_PARTIES + [PC]
     if country == NI:
-        POLITICAL_PARTIES =[DUP, SDLP, SF, UUP]
+        POLITICAL_PARTIES = [DUP, SDLP, SF, UUP]
     if country == UK:
-        POLITICAL_PARTIES= UK_PARTIES
+        POLITICAL_PARTIES = UK_PARTIES
     return POLITICAL_PARTIES

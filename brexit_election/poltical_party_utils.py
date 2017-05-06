@@ -12,6 +12,9 @@ UUP = 'UUP'
 
 YEARS = [1983, 1987, 1992, 1997, 2001, 2005, 2010, 2015]
 
+LONG_NAMES = ['Labour', 'Conservative', 'Liberal Democrat', 'Scottish National', 'Plaid Cymru', 'Green', 'United Kingdom Independence', 'Independent', 'Democratic Unionist', 'Ulster Unionist', 'British National', 'Sinn Fein', 'Social Democratic and Labour']
+SHORT_NAMES = ['Lab', 'Con', 'LD', 'SNP', 'PC', 'Green', 'UKIP', 'Ind', 'DUP', 'UUP', 'BNP', 'SF', 'SDLP']
+
 ENGLAND = 'England'
 SCOTLAND = 'Scotland'
 WALES = 'Wales'

@@ -119,7 +119,16 @@ def load_historic_data():
                             #print prev_const
                         data[year]['Constituency'].append(row['Constituency Name'])
                     data[year]['Candidate'].append(row['Candidate'])
-                    data[year]['Party'].append(row['Party'])
+                    party = row['Party']
+                    try:
+                        index = LONG_NAMES.index(party)
+                        data[year]['Party'].append(SHORT_NAMES[index])
+                    except ValueError, e:
+                        # Check if we have Labour/Co-operative, if so enter 'Lab'
+                        if party == 'Labour/Co-operative':
+                            data[year]['Party'].append('Lab')
+                        else:
+                            data[year]['Party'].append(party)
                     try:
                         data[year]['Votes'].append(float(row['Votes']))
                         data[year]['count'] = float(row['Votes'])+data[year]['count']
@@ -160,6 +169,28 @@ def load_historic_data():
         #print "From 2005, " + str(missing_2005) + ' seats different.'
         #print 'There were ' + str(same_count) + ' differences which were the same in 2005 and 2001.'
     #print common_seats
+def get_all_biases_for_common_seats():
+    for party in SHORT_NAMES:
+        name = party+'_biases.csv'
+        with open(name, 'w') as csvfile:
+            writer = csv.DictWriter(csvfile, ['Seat','2001 Bias','2005 Bias', '2010 Bias'])
+            writer.writerow({
+                    'Seat': 'seat',
+                    '2001 Bias': '2001',
+                    '2005 Bias': '2005',
+                    '2010 Bias': '2010',
+                })
+            for seat in common_seats:
+                results = {
+                    'Seat': seat,
+                    '2001 Bias': 0.0,
+                    '2005 Bias': 0.0,
+                    '2010 Bias': 0.0,
+                }
+                for year in YEARS:
+                    results[year+' Bias'] = get_party_bias_for_seat_and_year(party, seat, year)
+                writer.writerow(results)
+
 
 def get_vote_share_for_party_in_seat_in_year(seat, party, year):
     i = 0
@@ -184,6 +215,8 @@ def get_vote_share_for_party_in_seat_in_year(seat, party, year):
         i += 1
     seat_votes = sum(respective_votes)
     if party not in parties:
+        print party + ' not present in list:'
+        print parties
         return 0
     index = parties.index(party)
     vote_share = float(respective_votes[index])/float(seat_votes)
@@ -202,6 +235,9 @@ def get_vote_share_for_party_in_year(party, year):
 def get_party_bias_for_seat_and_year(party, seat, year):
     national_share = get_vote_share_for_party_in_year(party, year)
     seat_share = get_vote_share_for_party_in_seat_in_year(seat, party, year)
+    if national_share == 0:
+        # Not a valid natonal share - none whatsoever so not one of our mainstream parties. Return 0.
+        return 0.0
     bias = (seat_share/national_share)-1
     return bias
 
